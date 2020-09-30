@@ -6,7 +6,7 @@ const HomePage = () => {
     <BlogLayout>
       <BlogPostsCell />
     </BlogLayout>
-  )  
+  )
 }
 
 export default HomePage
