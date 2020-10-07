@@ -5,6 +5,7 @@ import {
   Submit,
   FieldError,
   Label,
+  FormError,
 } from '@redwoodjs/forms'
 import { Flash, useFlash, useMutation } from '@redwoodjs/web'
 import BlogLayout from 'src/layouts/BlogLayout'
@@ -36,13 +37,11 @@ const ContactPage = () => {
   return (
     <BlogLayout>
       <Flash timeout={1000} />
-      <Form onSubmit={onSubmit} validation={{ mode: 'onBlur' }}>
-        {error && (
-          <div style={{ color: 'red' }}>
-            {"We couldn't send your message: "}
-            {error.message}
-          </div>
-        )}
+      <Form onSubmit={onSubmit} validation={{ mode: 'onBlur' }} error={error}>
+        <FormError
+          error={error}
+          wrapperStyle={{ color: 'red', backgroundColor: 'lavenderblush' }}
+        />
         <Label name="name" errorClassName="error">
           Name
         </Label>
