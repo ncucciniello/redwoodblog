@@ -8,6 +8,7 @@ import {
   FormError,
 } from '@redwoodjs/forms'
 import { Flash, useFlash, useMutation } from '@redwoodjs/web'
+import { useForm } from 'react-hook-form'
 import BlogLayout from 'src/layouts/BlogLayout'
 
 const CREATE_CONTACT = gql`
@@ -19,13 +20,15 @@ const CREATE_CONTACT = gql`
 `
 
 const ContactPage = () => {
+  const formMethods = useForm()
   const { addMessage } = useFlash()
 
   const [create, { loading, error }] = useMutation(CREATE_CONTACT, {
-    onComplete: () => {
+    onCompleted: () => {
       addMessage('Thank you for your submission!', {
         style: { backgroundColor: 'green', color: 'white', padding: '1rem' },
       })
+      formMethods.reset()
     },
   })
 
@@ -37,7 +40,12 @@ const ContactPage = () => {
   return (
     <BlogLayout>
       <Flash timeout={1000} />
-      <Form onSubmit={onSubmit} validation={{ mode: 'onBlur' }} error={error}>
+      <Form
+        onSubmit={onSubmit}
+        validation={{ mode: 'onBlur' }}
+        error={error}
+        formMethods={formMethods}
+      >
         <FormError
           error={error}
           wrapperStyle={{ color: 'red', backgroundColor: 'lavenderblush' }}
